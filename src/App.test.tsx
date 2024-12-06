@@ -33,7 +33,7 @@ describe('Todo App - Scenarios', () => {
 
         const todoItem = screen.getByText('My test TO-DO');
         expect(todoItem).not.toHaveClass('checked');
-        expect(todoItem).toBeInTheDocument();
+        expect(todoItem).not.toBeInTheDocument();
     });
 
     it('Scenario 3 - Check the checkbox with checked status in the list', () => {
@@ -47,12 +47,12 @@ describe('Todo App - Scenarios', () => {
         const todoItemText = screen.getByText('My test TO-DO');
         const checkbox = todoItemText.closest('label').querySelector('input[type="checkbox"]');
 
-        // fireEvent.click(checkbox);
-        //
-        // expect(checkbox.checked).toBe(true);
-        // fireEvent.click(checkbox);
-        //
-        // expect(checkbox.checked).toBe(false);
+        fireEvent.click(checkbox);
+
+        expect(checkbox.checked).toBe(true);
+        fireEvent.click(checkbox);
+
+        expect(checkbox.checked).toBe(false);
     });
 
     it('Scenario 4 - Check auto-sink checked items to the bottom', () => {
@@ -65,12 +65,11 @@ describe('Todo App - Scenarios', () => {
         fireEvent.submit(todoInput);
         fireEvent.click(checkbox);
 
-        // expect(checkbox.checked).toBe(true);
-        //
-        //
-        // const listItems = screen.getAllByRole('listitem', { hidden: true });
-        // const lastItem = listItems[listItems.length - 1];
-        //
-        // expect(lastItem).toHaveTextContent('My test TO-DO');
+        expect(checkbox.checked).toBe(true);
+
+        const listItems = screen.getAllByRole('list');
+        const lastItem = listItems[listItems.length - 1];
+
+        expect(lastItem).toHaveTextContent('My test TO-DO');
     });
 });
